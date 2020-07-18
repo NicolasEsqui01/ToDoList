@@ -94,3 +94,7 @@ export const DivBottom = styled.div`
     flex-direction:row;
     justify-content:center;
 `
+
+export const MessageError = styled.span`
+    color:red;
+`

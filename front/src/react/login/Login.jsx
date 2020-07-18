@@ -14,7 +14,7 @@ import {
   DivBottom
 } from './style'
 
-export default () => {
+export default ({handleSubmit , handleChange}) => {
     return (
         <>
         <DivContenedor>
@@ -25,14 +25,14 @@ export default () => {
           <DivContainer>
             <SubTitle>Login</SubTitle>
   
-            <Form >
+            <Form onSubmit={handleSubmit}>
 
               <DivLabel>
                 <Label>Email:</Label>
                 <Input
                   type="email"
                   name="email"
-                //   onChange={handleChange}
+                  onChange={handleChange}
                   placeholder="Write your E-mail"
                 />
               </DivLabel>
@@ -42,12 +42,12 @@ export default () => {
               <Input
                 type="password"
                 name="password"
-                // onChange={handleChange}
+                onChange={handleChange}
                 placeholder="Type a password"
               />
             </DivLabel>
 
-              <ButtonSubmit type="submit" value="Entrar" />
+              <ButtonSubmit type="submit" value="Get in"/>
 
             </Form>
   

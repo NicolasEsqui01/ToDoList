@@ -2,10 +2,12 @@ const userMethod = {};
 const { User } = require('../models/index');
 
 userMethod.register = (req, res, next) =>{
-    console.log(req.body)
     User.create(req.body)
         .then(()=> res.sendStatus(200))
-        .catch(next);
+        .catch(err => {
+            err.message = 'E-mail existente' 
+            res.status(500).send(err.message)
+        });
 };
 
 userMethod.loggin = (req, res, next) =>{
@@ -21,7 +23,7 @@ userMethod.logout = (req, res, next) => {
 };
 
 userMethod.persistencia = (req , res , next) => {
-    if(eq.isAuthenticated()){
+    if(req.isAuthenticated()){
         res.json(req.user)
     }else{
         res.json({})

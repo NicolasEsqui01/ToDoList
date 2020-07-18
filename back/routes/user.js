@@ -7,7 +7,7 @@ const passport = require('../config/passport')
 // /API/USER
 
 Router.post('/register', getUsers.register)
-Router.post('/loggin' , passport.authenticate('local') , getUsers.loggin)
+Router.post('/login' , passport.authenticate('local') , getUsers.loggin)
 Router.get('/logout' , getUsers.logout)
 Router.get('/persistencia' , getUsers.persistencia)
 

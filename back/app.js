@@ -35,9 +35,6 @@ app.get("/*", (req, res, next) => {
   res.sendFile(__dirname + "/public/" + "index.html");
 });
 
-app.use((err, req, res, next) => {
-  res.status(500).send(err);
-});
 
 db.sync({ force: false })
   .then(() => {

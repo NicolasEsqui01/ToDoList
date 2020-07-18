@@ -1,5 +1,5 @@
 import { SET_USERS } from '../constants';
-import Axios from 'axios'
+import axios from 'axios'
 
 const getUser = (user) =>{
     return {
@@ -10,16 +10,24 @@ const getUser = (user) =>{
 
 export const register = (datos) =>{
     return dispacth => {
-        return Axios.post('/api/user/register', datos)
+        return axios.post('/api/user/register', datos).catch(err =>{
+            return err.response
+        })
     };
 };
 
 export const persistencia = () =>{
     return dispacth => {
-        return Axios.get('/api/user/persistencia')
+        return axios.get('/api/user/persistencia')
     };
 };
 
+export const login = (datos) =>{
+    return dispacth => {
+        return axios.post('/api/user/login' , datos)
+            .then((data) => dispacth(getUser(data)))
+    }
+};
 
 
 

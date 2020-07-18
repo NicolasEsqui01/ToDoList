@@ -11,10 +11,11 @@ import {
   DivTitle,
   SubTitle,
   TagA,
-  DivBottom
+  DivBottom,
+  MessageError
 } from "./style";
 
-export default ({ handleSubmit, handleChange }) => {
+export default ({ handleSubmit, handleChange , err}) => {
   return (
     <>
       <DivContenedor>
@@ -41,7 +42,7 @@ export default ({ handleSubmit, handleChange }) => {
                 type="email"
                 name="email"
                 onChange={handleChange}
-                placeholder="Write your E-mail"
+                placeholder={err !== '' ? <MessageError>{err}</MessageError> : "Write your E-mail"}
               />
             </DivLabel>
             <DivLabel>
@@ -54,7 +55,7 @@ export default ({ handleSubmit, handleChange }) => {
               />
             </DivLabel>
 
-            <ButtonSubmit type="submit" value="Entrar" />
+            <ButtonSubmit type="submit" value="Get in" />
           </Form>
 
           <DivBottom>

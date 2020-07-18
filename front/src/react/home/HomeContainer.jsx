@@ -1,11 +1,13 @@
 import React , {useState , useEffect} from 'react';
 import {connect} from 'react-redux';
 import Home from './Home'
+import { withRouter } from 'react-router'
 import { register } from '../../redux/action/users'
 
-const HomeContainer = ({register}) =>{
+const HomeContainer = ({register , history}) =>{
 
     const [ input, setInput] = useState({});
+    const [messageError , setMessageError] = useState('')
 
     const handleSubmit = (event) =>{
         const data ={
@@ -14,12 +16,14 @@ const HomeContainer = ({register}) =>{
             password:event.target[2].value
         }
         event.preventDefault();
-        register(data)
-        setInput({
-            [event.target[0].name]:'',
-            [event.target[1].name]:'',
-            [event.target[2].name]:''
+        register(data).then((res) => {
+            if(res.status === 500){
+                setMessageError(res.data)
+            }else{
+                return history.push('/login')
+            }
         })
+        
     };
 
     const handleChange = (event) => {
@@ -32,6 +36,7 @@ const HomeContainer = ({register}) =>{
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         valor = {input}
+        err={messageError}
         />
     )
 
@@ -44,4 +49,4 @@ const mapDispacthToProps = (dispatch) => {
 };
 
 
-export default connect(null,mapDispacthToProps)(HomeContainer)
+export default withRouter(connect(null,mapDispacthToProps)(HomeContainer))
