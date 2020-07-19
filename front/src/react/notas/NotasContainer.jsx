@@ -1,15 +1,15 @@
 import React from 'react';
 import {connect } from 'react-redux';
 import Notas from './Notas';
-
+import Navbar from '../nabvar/NavBarContainer';
 
 const NotasContainer = () =>{
 
-
-
-
     return (
+        <>
+        <Navbar/>
         <Notas/>
+        </>
     )
 };
 
@@ -28,4 +28,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToprops,mapStateToprops)(NotasContainer)
+export default connect(mapStateToprops,mapDispatchToProps)(NotasContainer)

@@ -13,8 +13,9 @@ import {
   TagA,
   DivBottom
 } from './style'
+import {Alert , AlertTitle} from '@material-ui/lab';
 
-export default ({handleSubmit , handleChange}) => {
+export default ({handleSubmit , handleChange , err}) => {
     return (
         <>
         <DivContenedor>
@@ -24,7 +25,7 @@ export default ({handleSubmit , handleChange}) => {
   
           <DivContainer>
             <SubTitle>Login</SubTitle>
-  
+
             <Form onSubmit={handleSubmit}>
 
               <DivLabel>
@@ -55,6 +56,13 @@ export default ({handleSubmit , handleChange}) => {
               <TagA href="/">Sing in</TagA>
             </DivBottom>
             
+            {err !== '' ? 
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {err}
+              </Alert>
+            : null }
+
           </DivContainer>
         </DivContenedor>
       </>

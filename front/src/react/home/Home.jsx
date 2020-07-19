@@ -14,8 +14,9 @@ import {
   DivBottom,
   MessageError
 } from "./style";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
-export default ({ handleSubmit, handleChange , err}) => {
+export default ({ handleSubmit, handleChange, err }) => {
   return (
     <>
       <DivContenedor>
@@ -42,7 +43,7 @@ export default ({ handleSubmit, handleChange , err}) => {
                 type="email"
                 name="email"
                 onChange={handleChange}
-                placeholder={err !== '' ? <MessageError>{err}</MessageError> : "Write your E-mail"}
+                placeholder="Write your E-mail"
               />
             </DivLabel>
             <DivLabel>
@@ -61,7 +62,12 @@ export default ({ handleSubmit, handleChange , err}) => {
           <DivBottom>
             <TagA href="/login">To Access</TagA>
           </DivBottom>
-
+          {err !== "" ? (
+                <Alert severity="error" >
+                  <AlertTitle>Error</AlertTitle>
+                  {err}
+                </Alert>
+              ) : null}
         </DivContainer>
       </DivContenedor>
     </>

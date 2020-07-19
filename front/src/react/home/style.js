@@ -3,6 +3,8 @@ import styled from 'styled-components'
 export const DivContenedor = styled.div`
     display:flex;
     flex-direction:column;
+    justify-content:space-around;
+    align-items:center;
 `
 
 
@@ -11,7 +13,6 @@ export const DivContainer = styled.div`
     border-radius:15px;
     padding:20px;
     width:40%;
-    margin:0 auto;
     height:500px;
     display:flex;
     flex-direction:column;
@@ -37,15 +38,16 @@ export const Input = styled.input`
 
 export const ButtonSubmit = styled.input`
     border-radius:15px;
-    background-color:blue;
-    border:1px solid blue;
+    background-color:black;
+    border:1px solid black;
     outline:none;
     width:90px;
     height:30px;
     color:white;
     &:hover{
-        background-color:red;
-        border:1px solid red;
+        background-color:white;
+        border:1px solid black;
+        color:black;
     }
 `
 

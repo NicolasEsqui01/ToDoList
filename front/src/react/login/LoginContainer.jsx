@@ -2,20 +2,30 @@ import React , { useState } from 'react';
 import { connect } from 'react-redux';
 import Login from './Login'
 import { login as setLogin} from '../../redux/action/users'
+import { withRouter } from 'react-router'
 
-const LoginContainer = ({login}) => {
+const LoginContainer = ({login , history}) => {
 
     const [ data , setData ] = useState({})
+    const [messageErr , setMessageErr] = useState('')
 
     const handleSubmit = (event) =>{
         event.preventDefault()
+        
         const data = {
             email:event.target[0].value,
             password:event.target[1].value
         }
-        login(data).then((x)=>{
-            console.log(x)
-        })
+
+        login(data).then( res =>{
+            if(res.status === 401){
+                res.data = 'Email or Password are incorrect'
+                setMessageErr(res.data)
+            }else{
+                return history.push('/notas')
+            }
+        });
+
     };
 
     const handleChange = (event) =>{
@@ -27,14 +37,9 @@ const LoginContainer = ({login}) => {
         <Login
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            err={messageErr}
         />
     )
-};
-
-const mapStateToProps = (state) => {
-    return {
-
-    }
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -43,4 +48,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(LoginContainer)
+export default withRouter(connect(null,mapDispatchToProps)(LoginContainer))

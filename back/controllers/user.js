@@ -12,6 +12,7 @@ userMethod.register = (req, res, next) =>{
 
 userMethod.loggin = (req, res, next) =>{
     res.status(200).json({
+        id:req.user.id,
         name:req.user.name,
         email:req.user.email
     })
@@ -24,7 +25,11 @@ userMethod.logout = (req, res, next) => {
 
 userMethod.persistencia = (req , res , next) => {
     if(req.isAuthenticated()){
-        res.json(req.user)
+        res.json({
+            id:req.user.id,
+            name:req.user.name,
+            email:req.user.email
+        })
     }else{
         res.json({})
     }
