@@ -1,6 +1,7 @@
 const User = require('./user');
 const Nota = require('./nota');
 
-User.belongsToMany(Nota , {through : 'notas_users'})
+Nota.belongsTo(User);
+
 
 module.exports = {User , Nota};

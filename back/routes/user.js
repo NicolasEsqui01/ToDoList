@@ -10,5 +10,7 @@ Router.post('/register', getUsers.register)
 Router.post('/login' , passport.authenticate('local') , getUsers.loggin)
 Router.get('/logout' , getUsers.logout)
 Router.get('/persistencia' , getUsers.persistencia)
+Router.get('/', getUsers.todosUser)
+
 
 module.exports = Router;

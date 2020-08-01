@@ -2,13 +2,16 @@ const express = require('express');
 const Router  = express.Router();
 const notasMethods = require('../controllers/notas');
 
-// Router.post('/newNota' , notasMethods);
+
+//API/NOTAS/
+
+Router.post('/newNota' , notasMethods.createNote);
 // todas las notas de un usuario;
-// Router.get('/');
+Router.get('/:id' , notasMethods.NotasUser);
 // elinimar una nota de un usuario;
-// Router.delete('/');
+Router.delete('/:id' , notasMethods.DeleteNotas);
 // actualizar una nota de un usuario;
-// Router.put('/');
+Router.put('/:id' , notasMethods.Actualizar);
 
 
 

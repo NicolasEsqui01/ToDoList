@@ -1,6 +1,7 @@
 const userMethod = {};
 const { User } = require('../models/index');
 
+
 userMethod.register = (req, res, next) =>{
     User.create(req.body)
         .then(()=> res.sendStatus(200))
@@ -33,6 +34,13 @@ userMethod.persistencia = (req , res , next) => {
     }else{
         res.json({})
     }
+};
+
+userMethod.todosUser = (req, res, next) =>{
+
+    User.findAll().then((data) => res.status(200).json(data));
+
+
 };
 
 
