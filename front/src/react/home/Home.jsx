@@ -11,12 +11,19 @@ import {
   DivTitle,
   SubTitle,
   TagA,
-  DivBottom,
-  MessageError
+  DivBottom
 } from "./style";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
-export default ({ handleSubmit, handleChange, err }) => {
+export default ({
+  handleSubmit,
+  handleChange,
+  err,
+  email,
+  name,
+  password,
+  borrar
+}) => {
   return (
     <>
       <DivContenedor>
@@ -34,6 +41,7 @@ export default ({ handleSubmit, handleChange, err }) => {
                 type="text"
                 name="name"
                 onChange={handleChange}
+                value={name}
                 placeholder="Write your name"
               />
             </DivLabel>
@@ -43,6 +51,7 @@ export default ({ handleSubmit, handleChange, err }) => {
                 type="email"
                 name="email"
                 onChange={handleChange}
+                value={email}
                 placeholder="Write your E-mail"
               />
             </DivLabel>
@@ -52,6 +61,7 @@ export default ({ handleSubmit, handleChange, err }) => {
                 type="password"
                 name="password"
                 onChange={handleChange}
+                value={password}
                 placeholder="Type a password"
               />
             </DivLabel>
@@ -63,11 +73,17 @@ export default ({ handleSubmit, handleChange, err }) => {
             <TagA href="/login">To Access</TagA>
           </DivBottom>
           {err !== "" ? (
-                <Alert severity="error" >
-                  <AlertTitle>Error</AlertTitle>
-                  {err}
-                </Alert>
-              ) : null}
+          <>
+            {email === "" ? (
+              borrar()
+            ) : (
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {err}
+              </Alert>
+            )}
+          </>
+        ) : null}
         </DivContainer>
       </DivContenedor>
     </>

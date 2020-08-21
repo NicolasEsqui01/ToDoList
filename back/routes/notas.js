@@ -6,12 +6,17 @@ const notasMethods = require('../controllers/notas');
 //API/NOTAS/
 
 Router.post('/newNota' , notasMethods.createNote);
-// todas las notas de un usuario;
-Router.get('/:id' , notasMethods.NotasUser);
 // elinimar una nota de un usuario;
 Router.delete('/:id' , notasMethods.DeleteNotas);
+// finalizar nota 
+Router.put('/status/:id', notasMethods.FinalizarNota);
 // actualizar una nota de un usuario;
 Router.put('/:id' , notasMethods.Actualizar);
+// Buscador de notas 
+Router.get('/search' , notasMethods.Search);
+// todas las notas de un usuario;
+Router.get('/', notasMethods.NotasUser);
+
 
 
 

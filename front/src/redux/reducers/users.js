@@ -1,14 +1,14 @@
-import { SET_USERS } from '../constants';
+import { SET_USERS } from "../constants";
 
 const stateInicial = {
-    data:{}
+  data: {}
 };
 
-export default (state = stateInicial , action) => {
-    switch(action.type){
-        case SET_USERS :
-            return {...state , data: action.user}
-        default :
-            return state
-    }
+export default (state = stateInicial, action) => {
+  switch (action.type) {
+    case SET_USERS:
+      return { ...state, data: action.user };
+    default:
+      return state;
+  }
 };

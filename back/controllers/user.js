@@ -3,8 +3,12 @@ const { User } = require('../models/index');
 
 
 userMethod.register = (req, res, next) =>{
-    User.create(req.body)
-        .then(()=> res.sendStatus(200))
+    User.create({
+        name:req.body.name,
+        email:req.body.email,
+        password:req.body.password
+    })
+        .then(() => res.sendStatus(200))
         .catch(err => {
             err.message = 'E-mail existente' 
             res.status(500).send(err.message)
@@ -20,8 +24,7 @@ userMethod.loggin = (req, res, next) =>{
 };
 
 userMethod.logout = (req, res, next) => {
-    req.logout()
-    res.json({})
+    req.logout();
 };
 
 userMethod.persistencia = (req , res , next) => {
@@ -37,10 +40,13 @@ userMethod.persistencia = (req , res , next) => {
 };
 
 userMethod.todosUser = (req, res, next) =>{
-
-    User.findAll().then((data) => res.status(200).json(data));
-
-
+    User.findAll({
+        attributes:['id','name','email']
+    }).then((data) => {
+        res.status(200).json(data)
+    }).catch((err) => {
+        res.status(500).send(err)
+    })
 };
 
 

@@ -1,18 +1,18 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const passport = require("passport");
 const cookies = require("cookie-parser");
 const session = require("express-session");
-const bodyParser = require('body-parser')
-const path = require('path');
+const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const db = require("./config/db");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
-require('./config/passport');
+const passport = require("./config/passport");
 
+app.use(cors({ origin: true }));
 app.use(express.static(__dirname + "/public"));
 app.use(morgan("dev"));
 app.use(cookies());
@@ -28,13 +28,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use("/api", routes);
-
-app.get("/*", (req, res, next) => {
-  res.sendFile(__dirname + "/public/" + "index.html");
-});
-
 
 db.sync({ force: false})
   .then(() => {

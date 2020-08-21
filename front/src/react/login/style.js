@@ -17,6 +17,7 @@ export const DivContainer = styled.div`
     flex-direction:column;
     justify-content:center;
     background:white;
+    box-shadow: 8px 10px 5px 0px rgba(204,204,204,1);
 `
 
 export const Form = styled.form`
@@ -52,7 +53,6 @@ export const ButtonSubmit = styled.input`
 export const Label = styled.label`
     font-size:20px;
     margin-right:15px;
-
 
 `
 export const DivLabel = styled.div`
