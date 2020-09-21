@@ -1,11 +1,7 @@
-import {
-  ALL_NOTAS,
-  SEARCH_NOTAS,
-  VACIAR_SEARCH,
-} from "../constants";
+import { ALL_NOTAS, SEARCH_NOTAS, VACIAR_SEARCH, ID_NOTA } from "../constants";
 import axios from "axios";
 
-const { PORT = 3000 } = process.env
+const { PORT = 3000 } = process.env;
 
 const AllNotas = notas => {
   return {
@@ -27,24 +23,65 @@ const vaciarSearch = () => {
   };
 };
 
+const idNotas = nota => {
+  return {
+    type: ID_NOTA,
+    nota
+  };
+};
+
 const getSearchNotas = name => dispatch => {
-  return axios.get(`http://localhost:${PORT}/api/notas/search?name=${name}`).then(res => {
-    return dispatch(SearchNotas(res.data));
-  });
+  return axios
+    .get(`http://localhost:${PORT}/api/notas/search?name=${name}`, {
+      withCredentials: true
+    })
+    .then(res => {
+      return dispatch(SearchNotas(res.data));
+    });
 };
 
 const setNotas = objeto => dispatch => {
-  return axios.post(`http://localhost:${PORT}/api/notas/newNota`, objeto);
-};
-
-const getNotas = () => dispatch => {
-  return axios.get(`http://localhost:${PORT}/api/notas`).then(res => {
-    return dispatch(AllNotas(res.data));
+  return axios.post(`http://localhost:${PORT}/api/notas/newNota`, objeto, {
+    withCredentials: true
   });
 };
 
-const DeleteNotas = id => dispatch => {
-  return axios.delete(`http://localhost:${PORT}/api/notas/${id}`);
+const getNotas = () => dispatch => {
+  return axios
+    .get(`http://localhost:${PORT}/api/notas`, {
+      withCredentials: true
+    })
+    .then(res => {
+      return dispatch(AllNotas(res.data));
+    });
 };
 
-export { setNotas, getNotas, DeleteNotas, getSearchNotas, vaciarSearch };
+const DeleteNotas = id => dispatch => {
+  return axios.delete(`http://localhost:${PORT}/api/notas/${id}`, {
+    withCredentials: true
+  });
+};
+
+const updateNotas = (id, obj) => dispatch => {
+  return axios.put(`http://localhost:${PORT}/api/notas/${id}`, obj, {
+    withCredentials: true
+  });
+};
+
+const getIdNotas = id => dispatch => {
+  return axios
+    .get(`http://localhost:${PORT}/api/notas/${id}`, {
+      withCredentials: true
+    })
+    .then(res => dispatch(idNotas(res.data)));
+};
+
+export {
+  setNotas,
+  getNotas,
+  DeleteNotas,
+  getSearchNotas,
+  vaciarSearch,
+  getIdNotas,
+  updateNotas
+};

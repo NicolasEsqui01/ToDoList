@@ -1,7 +1,7 @@
 import { SET_USERS } from "../constants";
 import axios from "axios";
 
-const { PORT = 3000 } = process.env
+const { PORT = 3000 } = process.env;
 
 const getUser = user => {
   return {
@@ -12,16 +12,22 @@ const getUser = user => {
 
 export const register = datos => {
   return dispatch => {
-    return axios.post(`http://localhost:${PORT}/api/user/register`, datos).catch(err => {
-      return err.response;
-    });
+    return axios
+      .post(`http://localhost:${PORT}/api/user/register`, datos, {
+        withCredentials: true
+      })
+      .catch(err => {
+        return err.response;
+      });
   };
 };
 
 export const persistencia = () => {
   return dispatch => {
     return axios
-      .get(`http://localhost:${PORT}/api/user/persistencia`)
+      .get(`http://localhost:${PORT}/api/user/persistencia`, {
+        withCredentials: true
+      })
       .then(res => dispatch(getUser(res.data)));
   };
 };
@@ -29,7 +35,9 @@ export const persistencia = () => {
 export const login = datos => {
   return dispatch => {
     return axios
-      .post(`http://localhost:${PORT}/api/user/login`, datos)
+      .post(`http://localhost:${PORT}/api/user/login`, datos, {
+        withCredentials: true
+      })
       .then(res => dispatch(getUser(res.data)))
       .catch(err => {
         return err.response;
@@ -39,8 +47,20 @@ export const login = datos => {
 
 export const Logout = () => {
   return dispatch => {
-    return axios.get(`http://localhost:${PORT}/logout`).then((res) => {
-      dispatch(getUser({}))
-    })
+    return axios
+      .get(`http://localhost:${PORT}/api/user/logout`, {
+        withCredentials: true
+      })
+      .then(res => {
+        dispatch(getUser({}));
+      });
   };
-}
+};
+
+export const UpdateImg = obj => {
+  return dispatch => {
+    return axios.put(`http://localhost:${PORT}/api/user/img`, obj, {
+      withCredentials: true
+    });
+  };
+};

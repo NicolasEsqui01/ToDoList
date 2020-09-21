@@ -147,19 +147,6 @@ const Iconos = styled.div`
   }
 `;
 
-const Popup = styled.div`
-  display:${({Activar})=> Activar === 1 ? null : 'none'};
-  position:absolute;
-  border: 1px solid #cccccc;
-  width:30%;
-  height:300px;
-  top:20em;
-  left:40em;
-  z-index:3;
-  background-color: white;
-  box-shadow: 8px 10px 5px 0px rgba(204, 204, 204, 1);
-  border-radius:10px;
-`
 
 
 export {
@@ -183,22 +170,5 @@ export {
   DivIcons,
   DivHijo,
   Iconos,
-  Popup
 };
 
-
-let profesor = {
-  nombre:'nicolas',
-  alumnos:[
-    {
-      name:'nicolas',
-      history:[
-        {
-          posicionamiento:[],
-          distancia:0,
-          encesto:true || false
-        }
-      ],
-    }
-  ]
-}

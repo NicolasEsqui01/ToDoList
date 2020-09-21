@@ -1,44 +1,46 @@
-const S = require("sequelize");
-const db = require("../config/db");
+const mongoose = require("mongoose");
 const Crypto = require("crypto");
+const Schema = mongoose.Schema;
 
-class User extends S.Model {}
-
-User.init(
+const userSchema = new Schema(
   {
     name: {
-      type: S.STRING,
-      allowNull: false
+      type: String,
+      required: true
     },
     email: {
-      type: S.STRING,
-      allowNull: false,
+      type: String,
+      require: true,
       unique: true
     },
     password: {
-      type: S.STRING,
-      allowNull: false
+      type: String,
+      required: true
+    },
+    img: {
+      type: String,
+      default: null
     },
     salt: {
-      type: S.STRING
-    }
+      type: String
+    },
   },
-  { sequelize: db, modelName: "user" }
+  { collection: "users" }
 );
 
-User.beforeCreate(user => {
-  user.salt = Crypto.randomBytes(20).toString("hex");
-  user.password = user.hashFunction(user.password);
+userSchema.pre("save", function (next){
+  this.salt = Crypto.randomBytes(20).toString("hex");
+  this.password = this.setPassword(this.password);
+  next();
 });
 
-User.prototype.hashFunction = function(password) {
-  return Crypto.createHmac("sha1", this.salt)
-    .update(password)
-    .digest("hex");
+userSchema.methods.setPassword = function (pass) {
+  return Crypto.createHmac("sha1", this.salt).update(pass).digest("hex");
 };
 
-User.prototype.validatePassword = function(password) {
-  return this.hashFunction(password) === this.password;
+userSchema.methods.validatePassword = function(password) {
+  return this.setPassword(password) === this.password;
 };
+const User = mongoose.model("users", userSchema);
 
 module.exports = User;

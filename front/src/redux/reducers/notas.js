@@ -1,8 +1,9 @@
-import { ALL_NOTAS , SEARCH_NOTAS , VACIAR_SEARCH, } from "../constants";
+import { ALL_NOTAS , SEARCH_NOTAS , VACIAR_SEARCH, ID_NOTA } from "../constants";
 
 const inicialState = {
   notasUser: [],
-  setSearch: []
+  setSearch: [],
+  idNota:{}
 };
 
 export default (state = inicialState, action) => {
@@ -13,6 +14,8 @@ export default (state = inicialState, action) => {
       return {...state, setSearch:action.notas };
     case VACIAR_SEARCH :
       return {...state, setSearch:[]}
+    case ID_NOTA:
+      return {...state, idNota:action.nota}
     default:
       return state;
   }

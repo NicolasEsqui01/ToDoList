@@ -12,16 +12,18 @@ const NotasContainer = ({
   search,
   vaciarSearch,
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [booleano, setBooleano] = useState(false);
+  const [ title, setTitle] = useState("");
+  const [ description, setDescription] = useState("");
+  const [ booleano, setBooleano] = useState(false);
   const [ activar , setActivar] = useState(0);
+  const [ idNota , setIdNota] = useState('')
 
   useEffect(() => {
     if (!booleano || booleano) {
       getNotas();
     }
   }, [booleano]);
+
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -67,8 +69,9 @@ const NotasContainer = ({
     }
   };
 
-  const handleActivar = (num) => {
+  const handleActivar = (num,element) => {
     setActivar(num)
+    setIdNota(element)
   };  
 
   return (
@@ -83,6 +86,9 @@ const NotasContainer = ({
       handleElinacion={handleElinacion}
       handleActivar={handleActivar}
       activar={activar}
+      idNota={idNota}
+      booleano={setBooleano}
+      bool={booleano}
     />
   );
 };

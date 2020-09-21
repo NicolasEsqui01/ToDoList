@@ -7,7 +7,7 @@ import HomeContainer from "./home/HomeContainer";
 import LoginContainer from "./login/LoginContainer";
 import NotasContainer from "./notas/NotasContainer";
 import NabvarContainer from "./nabvar/NavBarContainer";
-import PerfilContainer from './perfil/PerfilContainer';
+import PerfilContainer from "./perfil/PerfilContainer";
 
 const Main = ({ persistencia, location }) => {
   useEffect(() => {
@@ -15,16 +15,14 @@ const Main = ({ persistencia, location }) => {
   }, []);
   return (
     <div>
-        
       {location.pathname !== "/" && location.pathname !== "/login" ? (
         <NabvarContainer />
       ) : null}
-
       <Switch>
         <Route exact path="/" component={HomeContainer} />
         <Route exact path="/login" component={LoginContainer} />
         <Route exact path="/notas" component={NotasContainer} />
-        <Route path='/perfil' component={PerfilContainer}/> 
+        <Route path="/perfil" component={PerfilContainer} />
       </Switch>
     </div>
   );

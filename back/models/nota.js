@@ -1,30 +1,35 @@
-const S = require('sequelize');
-const db  = require('../config/db');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-
-class Nota extends S.Model {};
-
-Nota.init({
-    title:{
-        type:S.STRING,
-        allowNull:false,
+const NotaSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true
     },
-    nota:{
-        type:S.TEXT,
-        allowNull:false
+    nota: {
+      type: String,
+      required: true
     },
-    status:{
-        type:S.TEXT,
-        defaultValue:'pending'
+    status: {
+      type: String,
+      default: "pending"
     },
-    inicio:{
-        type:S.STRING,
-    }
+    inicio: {
+      type: String
+    },
+    userid:{
+      type:String
+    },
+  },
+  { collection: "notas" }
+);
 
-},{sequelize:db , modelName:'nota' , timestamps:false})
+NotaSchema.pre("save", next => {
+  this.inicio = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`;
+  next();
+});
 
-Nota.addHook('beforeCreate' , (nota) =>{
-    nota.inicio = `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
-})
+const Notas = mongoose.model("notas", NotaSchema);
 
-module.exports = Nota;
+module.exports = Notas;

@@ -4,4 +4,4 @@ COPY ./package.json /app/front/package.json
 COPY ./webpack.config.js /app/front/webpack.config.js
 COPY . /app/front
 RUN ["npm","install"]
-CMD ["npm","run","build"]
+CMD ["npm","run","dev"]

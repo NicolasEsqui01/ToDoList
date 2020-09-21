@@ -7,9 +7,15 @@ const passport = require('../config/passport')
 // /API/USER
 
 Router.post('/register', getUsers.register)
+
 Router.post('/login' , passport.authenticate('local') , getUsers.loggin)
+
 Router.get('/logout' , getUsers.logout)
+
 Router.get('/persistencia' , getUsers.persistencia)
+
+Router.put('/img/:id', getUsers.ImagenUser)
+
 Router.get('/', getUsers.todosUser)
 
 

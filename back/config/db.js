@@ -1,8 +1,16 @@
-const Sequelize = require('sequelize');
-const db = new Sequelize('postgres://localhost:5432/ToDoList',{
-    logging:false,
-    dialect:'postgres'
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.DBURL,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+    useFindAndModify:false,
+    useCreateIndex:true
+})
+
+const db = mongoose.connection;
+
+db.once("oper", () => {
+    console.log('Conectando la db')
 });
 
 
-module.exports = db

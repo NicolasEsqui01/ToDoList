@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   DivContainer,
   DivAgregarNota,
@@ -19,11 +20,11 @@ import {
   DivCaja,
   DivIcons,
   DivHijo,
-  Iconos,
-  Popup
+  Iconos
 } from "./styles/style";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Popup from "../Popup/PopupContainer";
 
 export default ({
   handleSubmit,
@@ -35,7 +36,10 @@ export default ({
   search,
   handleElinacion,
   handleActivar,
-  activar
+  activar,
+  idNota,
+  booleano,
+  bool
 }) => {
   return (
     <DivContainer>
@@ -61,7 +65,11 @@ export default ({
                 value={description}
               ></Textarea>
             </DivInput>
-            <InputSubmit type="submit" value="enter"></InputSubmit>
+            {!title.length || !description.length ? (
+              <InputSubmit type="submit" value="enter" disabled/>
+            ) : (
+              <InputSubmit type="submit" value="enter" />
+            )}
           </Form>
         </DivAgregarNota>
       )}
@@ -70,20 +78,18 @@ export default ({
           <DivNotas>
             {search.map(element => {
               return (
-                <Div key={element.id} status={element.status}>
+                <Div key={element._id} status={element.status}>
                   <DivH1>
                     <DivCaja>
                       <H1>{element.title}</H1>
                       <DivIcons>
                         <Iconos>
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                          />
+                          <FontAwesomeIcon icon={faEdit} />
                         </Iconos>
                         <Iconos>
                           <FontAwesomeIcon
                             icon={faTrash}
-                            onClick={() => handleElinacion(element.id)}
+                            onClick={() => handleElinacion(element._id)}
                           />
                         </Iconos>
                       </DivIcons>
@@ -107,22 +113,18 @@ export default ({
                 <DivNotas>
                   {notas.map(element => {
                     return (
-                      <Div key={element.id} status={element.status}>
+                      <Div key={element._id} status={element.status}>
                         <DivH1>
                           <DivCaja>
                             <H1>{element.title}</H1>
                             <DivIcons>
-                              <Iconos>
-                                <FontAwesomeIcon
-                                  icon={faEdit}
-                                  onClick={() => handleActivar(1)}
-                                />
+                              <Iconos
+                                onClick={() => handleActivar(1, element._id)}
+                              >
+                                <FontAwesomeIcon icon={faEdit} />
                               </Iconos>
-                              <Iconos>
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  onClick={() => handleDelete(element.id)}
-                                />
+                              <Iconos onClick={() => handleDelete(element._id)}>
+                                <FontAwesomeIcon icon={faTrash} />
                               </Iconos>
                             </DivIcons>
                           </DivCaja>
@@ -134,22 +136,15 @@ export default ({
                   })}
                 </DivNotas>
               </DivHijo>
-              <Popup Activar={activar}>
-                <div>
-                  <button onClick={()=> handleActivar(0)}>x</button>
-                </div>
-                <form>
-                  <div>
-                    <label></label>
-                    <input type="text"/>
-                  </div>
-                  <div>
-                    <label></label>
-                    <input type="text"/>
-                  </div>
-                  <input type="submit"/>
-                </form>
-              </Popup>
+              {idNota ? (
+                <Popup
+                  start={activar}
+                  handleActivar={handleActivar}
+                  idNota={idNota}
+                  booleano={booleano}
+                  bool={bool}
+                />
+              ) : null}
             </>
           ) : null}
         </>

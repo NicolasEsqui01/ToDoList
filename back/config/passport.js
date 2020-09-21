@@ -1,4 +1,4 @@
-const { User } = require("../models/index");
+const { User } = require("../models");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
@@ -8,7 +8,7 @@ passport.use(
     password,
     done
   ) {
-    User.findOne({ where: { email: email } }).then(user => {
+    User.findOne({email: email}).then(user => {
       if (!user) {
         return done(null, false, { message: "usuario incorrecto" });
       }
@@ -21,11 +21,11 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findByPk(id).then(function(user) {
+  User.findById({_id:id}).then(function(user) {
     done(null, user);
   });
 });

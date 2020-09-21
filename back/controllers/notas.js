@@ -1,80 +1,91 @@
 const obj = {};
-const { Nota , User } = require('../models/index');
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
+const { Nota, User } = require("../models");
 
-
-obj.createNote = (req , res, next) => {
-    User.findOne({
-        where:{
-            id:req.user.id
-        }   
-    }).then((user) => {
-        Nota.create(req.body).then((nota) => {
-            nota.setUser(user.id)
-            res.sendStatus(200)
-        })
-    })  
-    .catch((err) => res.sendStatus(500).send(err.message))
-};  
-
-obj.NotasUser = (req, res, next) =>{
-    Nota.findAll({
-        where:{
-            userId:req.user.id
-        }
-    }).then((data) => res.status(200).json(data))
-    .catch((err) => res.sendStatus(500).send(err.message))
+// CREO UNA NOTA Y LE ASIGNO EL USUARIO QUE LA CREO
+obj.createNote = async (req, res, next) => {
+  try {
+    let newNota = await Nota.create(req.body);
+    let user = await User.findById({ _id: req.user._id });
+    newNota.userid = user._id;
+    await newNota.save();
+    res.sendStatus(201);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
-obj.DeleteNotas = (req, res, next) =>{
-    Nota.destroy({
-        where:{
-            id:req.params.id
-        }
-    }).then(() => res.sendStatus(200))
-    .catch((err) => res.sendStatus(500).send(err.message))
+// BUSCO LAS NOTAS DEL USUARIO
+
+obj.NotasUser = async (req, res, next) => {
+  try {
+    const nota = await Nota.find({ userid: req.user._id }).exec();
+    res.status(200).send(nota);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
-obj.Actualizar = (req, res, next) =>{
-    Nota.update(req.body,{
-        where:{
-            userId:req.params.id
-        },
-        returning:true
-    }).then((data) => res.status(200).send(data))
-    .catch((err) => res.sendStatus(500).send(err.message))
+// DELETE DE NOTA
+
+obj.DeleteNotas = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await Nota.deleteOne({ _id: id, userid: req.user._id });
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
-obj.FinalizarNota = (req, res, next) =>{
-    Nota.update({
-        status:'complete',
-    },{
-        where:{
-            id:req.params.id,
-            userId:req.user.id
-        },
-        returning:true
-    }).then((data) => res.status(200).send(data))
-    .catch((err) => res.sendStatus(500).send(err.message))
+// ACTUALIZAR UN NOTA
+
+obj.Actualizar = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updateNota = await Nota.updateOne(
+      { userid: req.user._id, _id: id },
+      req.body
+    );
+    res.status(200).send(updateNota);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
-obj.Search = (req, res, next) => {
-    Nota.findAll({
-        where:{
-            userId:req.user.id,
-            title:{
-                [Op.like] : `%${req.query.name}%`
-            }
-        }
-    }).then((data) => {
-        res.status(200).send(data)
-    }).catch((err) => {
-        res.status(500).send(err.message)
-    })
+obj.FinalizarNota = async (req, res, next) => {
+  try {
+    const Finalizar = await Nota.updateOne(
+      { _id: req.params.id, userid: req.user._id },
+      { status: "complete" }
+    );
+    res.status(200).send(Finalizar);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 };
 
+obj.Search = async (req, res, next) => {
+  try {
+    const busqueda = await Nota.find({
+      userid: req.user._id,
+      title: {
+        $regex: req.query.name
+      }
+    });
+    res.status(200).send(busqueda);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
 
-
+obj.getNotaId = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const notaId = await Nota.findById({ _id: id });
+    res.status(200).json(notaId);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
 
 module.exports = obj;

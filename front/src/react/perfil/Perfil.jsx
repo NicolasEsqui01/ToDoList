@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
-import { DivContainer , DivCard , DivTitle , DivItems, Strong , Parraro} from './style'
-import { Parrafo } from '../notas/styles/style';
+import React, { useState } from "react";
+import {
+  DivContainer,
+  DivCard,
+  DivTitle,
+  DivImgPerfil,
+  Img,
+  H3
+} from "./style";
 
-const Perfil = ({profile}) =>{
+const Perfil = ({ profile, handleSubmit }) => {
   return (
-        <DivContainer>
-            <DivCard >
-                <DivTitle>
-                    <h1>Perfil: <strong>{profile.id}</strong></h1>
-                </DivTitle>
-                <DivItems>
-                   <ul>
-                       <li>Name: <Parraro>{profile.name}</Parraro></li>
-                       <li>Email: <Parrafo>{profile.email}</Parrafo></li>
-                   </ul>
-                </DivItems>
-            </DivCard>
-        </DivContainer>
-    )
-};  
+    <DivContainer>
+      <DivCard>
+        <DivTitle>
+          <DivImgPerfil>
+            <Img src={profile.img} alt="#" />
+            <H3>{profile.name} </H3>
+          </DivImgPerfil>
+        </DivTitle>
+      </DivCard>
+      {/* <div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label></label>
+            <input type="file" />
+          </div>
+          <input type="submit" value="agregar" />
+        </form>
+      </div> */}
+    </DivContainer>
+  );
+};
 
-
-export default Perfil
+export default Perfil;

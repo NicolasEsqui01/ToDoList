@@ -14,6 +14,7 @@ import {
   DivBottom
 } from "./style";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import validacion from "../../assets/message";
 
 export default ({
   handleSubmit,
@@ -22,7 +23,10 @@ export default ({
   email,
   name,
   password,
-  borrar
+  borrar,
+  nameError,
+  emailError,
+  passwordError
 }) => {
   return (
     <>
@@ -65,25 +69,44 @@ export default ({
                 placeholder="Type a password"
               />
             </DivLabel>
-
-            <ButtonSubmit type="submit" value="Get in" />
+              
+              <ButtonSubmit type="submit" value="Get in" />
           </Form>
 
           <DivBottom>
             <TagA href="/login">To Access</TagA>
           </DivBottom>
           {err !== "" ? (
-          <>
-            {email === "" ? (
-              borrar()
-            ) : (
-              <Alert severity="error">
-                <AlertTitle>Error</AlertTitle>
-                {err}
-              </Alert>
-            )}
-          </>
-        ) : null}
+            <>
+              {email === "" ? (
+                borrar()
+              ) : (
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  {err}
+                </Alert>
+              )}
+            </>
+          ) : null}
+
+          {/* {nameError ? (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {validacion.name}
+            </Alert>
+          ) : null}
+          {emailError ? (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {validacion.email}
+            </Alert>
+          ) : null}
+          {passwordError ? (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              {validacion.password}
+            </Alert>
+          ) : null} */}
         </DivContainer>
       </DivContenedor>
     </>
