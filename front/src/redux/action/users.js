@@ -13,7 +13,7 @@ const getUser = user => {
 export const register = datos => {
   return dispatch => {
     return axios
-      .post(`http://localhost:${PORT}/api/user/register`, datos, {
+      .post(`${PORT}/api/user/register`, datos, {
         withCredentials: true
       })
       .catch(err => {
@@ -25,7 +25,7 @@ export const register = datos => {
 export const persistencia = () => {
   return dispatch => {
     return axios
-      .get(`http://localhost:${PORT}/api/user/persistencia`, {
+      .get(`${PORT}/api/user/persistencia`, {
         withCredentials: true
       })
       .then(res => dispatch(getUser(res.data)));
@@ -35,7 +35,7 @@ export const persistencia = () => {
 export const login = datos => {
   return dispatch => {
     return axios
-      .post(`http://localhost:${PORT}/api/user/login`, datos, {
+      .post(`${PORT}/api/user/login`, datos, {
         withCredentials: true
       })
       .then(res => dispatch(getUser(res.data)))
@@ -48,7 +48,7 @@ export const login = datos => {
 export const Logout = () => {
   return dispatch => {
     return axios
-      .get(`http://localhost:${PORT}/api/user/logout`, {
+      .get(`${PORT}/api/user/logout`, {
         withCredentials: true
       })
       .then(res => {
@@ -59,7 +59,7 @@ export const Logout = () => {
 
 export const UpdateImg = obj => {
   return dispatch => {
-    return axios.put(`http://localhost:${PORT}/api/user/img`, obj, {
+    return axios.put(`${PORT}/api/user/img`, obj, {
       withCredentials: true
     });
   };

@@ -48,7 +48,7 @@ const setNotas = objeto => dispatch => {
 
 const getNotas = () => dispatch => {
   return axios
-    .get(`http://localhost:${PORT}/api/notas`, {
+    .get(`${PORT}/api/notas`, {
       withCredentials: true
     })
     .then(res => {
@@ -57,20 +57,20 @@ const getNotas = () => dispatch => {
 };
 
 const DeleteNotas = id => dispatch => {
-  return axios.delete(`http://localhost:${PORT}/api/notas/${id}`, {
+  return axios.delete(`${PORT}/api/notas/${id}`, {
     withCredentials: true
   });
 };
 
 const updateNotas = (id, obj) => dispatch => {
-  return axios.put(`http://localhost:${PORT}/api/notas/${id}`, obj, {
+  return axios.put(`${PORT}/api/notas/${id}`, obj, {
     withCredentials: true
   });
 };
 
 const getIdNotas = id => dispatch => {
   return axios
-    .get(`http://localhost:${PORT}/api/notas/${id}`, {
+    .get(`${PORT}/api/notas/${id}`, {
       withCredentials: true
     })
     .then(res => dispatch(idNotas(res.data)));
