@@ -28,6 +28,7 @@ const userSchema = new Schema(
   { collection: "users" }
 );
 
+
 userSchema.pre("save", function (next){
   this.salt = Crypto.randomBytes(20).toString("hex");
   this.password = this.setPassword(this.password);

@@ -9,7 +9,7 @@ mongoose.connect(process.env.DBURL,{
 
 const db = mongoose.connection;
 
-db.once("oper", () => {
+db.once("open", () => {
     console.log('Conectando la db')
 });
 
